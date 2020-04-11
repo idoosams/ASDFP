@@ -1,15 +1,17 @@
 import socket
 import contextlib
- 
-class Connection:
+
+
+class Connection():
     def __init__(self, socket):
         self.socket = socket
- 
+
     def __repr__(self):
         from_address, from_port = self.socket.getsockname()
         to_address, to_port = self.socket.getpeername()
-        return f"<Connection from {from_address}:{from_port} to {to_address}:{to_port}>"
- 
+        return f"<Connection from {from_address}:{from_port} to " \
+            f"{to_address}:{to_port}>"
+
     def send(self, data):
         self.socket.sendall(data)
 
@@ -25,7 +27,7 @@ class Connection:
 
     def __enter__(self):
         pass
-    
+
     def receive(self, size):
         data = []
         # Receive the data in small chunks and retransmit it
@@ -41,9 +43,5 @@ class Connection:
 
         return b"".join(data)
 
-
- 
     def __exit__(self, type, value, traceback):
         self.socket.close()
- 
-
