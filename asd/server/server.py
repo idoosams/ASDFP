@@ -21,7 +21,7 @@ class Snapshot(Resource):
 
 
 api.add_resource(Config, '/config/')
-api.add_resource(Config, '/Snapshot/<user_id>')
+api.add_resource(Snapshot, '/snapshot/<user_id>')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='127.0.0.1', port='8000')

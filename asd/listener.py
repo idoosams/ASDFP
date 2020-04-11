@@ -1,4 +1,4 @@
-import ads.connection as connection
+import asd.connection as connection
 import socket
 
 

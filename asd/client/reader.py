@@ -2,7 +2,7 @@
 
 import gzip
 import struct
-from asd.asd_pb2 import User, Snapshot
+from . import asd_pb2 as pb
 
 
 class Reader():
@@ -24,7 +24,7 @@ class Reader():
     def _get_user(self):
         msg_size = struct.unpack("I", self._fd.read(4))[0]
         msg_bytes = self._fd.read(msg_size)
-        return User.FromString(msg_bytes)
+        return pb.User.FromString(msg_bytes)
 
     def __iter__(self):
         while True:
@@ -32,7 +32,7 @@ class Reader():
             if len(buf) == 4:
                 msg_size = struct.unpack("I", buf)[0]
                 msg_bytes = self._fd.read(msg_size)
-                snapshot = Snapshot.FromString(msg_bytes)
+                snapshot = pb.Snapshot.FromString(msg_bytes)
             else:
                 if (buf != ''):  # todo: handel errors
                     pass
