@@ -10,7 +10,7 @@ class Worker():
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host='localhost'))
         self.channel = connection.channel()
-        self.channel.queue_declare(queue='pose', durable=True)
+        self.channel.queue_declare(queue=queue_name, durable=True)
         print(' [*] Waiting for messages. To exit press CTRL+C')
 
     def callback(self, ch, method, properties, body):
@@ -18,7 +18,10 @@ class Worker():
         db_payload = self.payload_handler(payload)
         with self.db_publisher as publisher:
             publisher.publish(
-                db_payload, payload['user_id'], payload['datetime'])
+                db_payload,
+                payload['user_id'],
+                payload['datetime'],
+                self.queue_name)
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def start_consuming(self):
