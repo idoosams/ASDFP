@@ -3,7 +3,7 @@ from .workers_runner import WorkersRunner
 
 
 @click.command()
-@click.option('-w', 'workers_names')
+@click.option('-w', 'workers_names', default="")
 def cli_client(workers_names):
     workers_list = workers_names.split(',')
     WorkersRunner.run(workers_list)
