@@ -14,14 +14,15 @@ class DBPublisher():
         self.channel.queue_declare(queue="db_feed", durable=True)
         return self
 
-    def publish(self, data, user_id, datetime):
+    def publish(self, data, user_id, datetime, queue_name):
         self.channel.basic_publish(
             exchange='',
             routing_key="db_feed",
             body=pickle.dumps(
                 dict(data=data,
                      user_id=user_id,
-                     datetime=datetime)),
+                     datetime=datetime,
+                     queue_name=queue_name)),
             properties=pika.BasicProperties(
                 delivery_mode=2,  # make message persistent
             ))

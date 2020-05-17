@@ -38,4 +38,3 @@ class Client:
         with self.reader as reader:
             for snapshot in reader:
                 self.post_snapshot(snapshot, reader.user.user_id)
-
