@@ -13,6 +13,7 @@ docutils==0.15.2
 flake8==3.8.1
 Flask==1.1.1
 Flask-RESTful==0.3.8
+furl==2.1.0
 idna==2.8
 imagesize==1.1.0
 itsdangerous==1.1.0
@@ -23,6 +24,7 @@ matplotlib==3.2.1
 mccabe==0.6.1
 more-itertools==7.2.0
 numpy==1.18.4
+orderedmultidict==1.0.1
 packaging==19.2
 pika==1.1.0
 Pillow==7.1.2

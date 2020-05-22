@@ -1,5 +1,10 @@
 import click
 from .server_runner import ServerRunner
+import configparser
+
+
+config = configparser.ConfigParser()
+config.read('../config.ini')
 
 
 @click.group()
@@ -8,8 +13,8 @@ def cli_client():
 
 
 @cli_client.command('run_server')
-@click.option('-h', 'host', default='0.0.0.0')
-@click.option('-p', 'port', default='5000')
+@click.option('-h', 'host', default=config['server']['host'])
+@click.option('-p', 'port', default=config['server']['port'])
 def run_server(host, port):
     ServerRunner.run(host=host, port=port)
 

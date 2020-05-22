@@ -1,5 +1,6 @@
 import pika
 import pickle
+from furl import furl
 # todo: loger by mq
 
 config = ['datetime', 'pose', 'color_image', 'feelings', 'depth_image']
@@ -10,8 +11,9 @@ class SnanpshotPublisher():
         self.host = host
 
     def __enter__(self):
+        x = furl("rabbitmq://mq-asd:5672")
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(self.host))
+            pika.ConnectionParameters(x.host, x.port))
         self.channel = self.connection.channel()
         for field in config:
             self.channel.queue_declare(queue=field, durable=True)
