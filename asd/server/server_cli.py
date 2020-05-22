@@ -8,7 +8,7 @@ def cli_client():
 
 
 @cli_client.command('run_server')
-@click.option('-h', 'host', default='127.0.0.1')
+@click.option('-h', 'host', default='0.0.0.0')
 @click.option('-p', 'port', default='5000')
 def run_server(host, port):
     ServerRunner.run(host=host, port=port)

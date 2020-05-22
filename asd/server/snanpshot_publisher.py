@@ -6,7 +6,7 @@ config = ['datetime', 'pose', 'color_image', 'feelings', 'depth_image']
 
 
 class SnanpshotPublisher():
-    def __init__(self, host='localhost'):
+    def __init__(self, host='0.0.0.0'):
         self.host = host
 
     def __enter__(self):

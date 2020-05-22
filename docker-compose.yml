@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+    server-asd: 
+        build:
+            context: "./asd"
+            dockerfile: "./server/Dockerfile"
+        ports: 
+            - 5000:5000
+        depends_on:
+            - mq-asd
+        networks:
+            - asd-net
+
+    mq-asd:
+        image: "rabbitmq"
+        ports:
+            - 5672:5672
+        networks:
+            - asd-net
+
+networks:
+    asd-net:
