@@ -4,7 +4,7 @@ from .worker_base import Worker
 import pathlib
 from .utills import parse_payload
 
-db_path = "/home/idos/Desktop/Advenced-System-Design/ASDFP/asd/data"
+db_path = "../data"
 
 
 class ColorImgWorker:

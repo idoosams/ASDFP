@@ -6,7 +6,7 @@ from matplotlib.pyplot import imshow, savefig
 import numpy
 import json
 
-db_path = "/home/idos/Desktop/Advenced-System-Design/ASDFP/asd/data"
+db_path = "../data"
 
 
 class DepthImgWorker:

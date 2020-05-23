@@ -1,11 +1,8 @@
 FROM python:3
 
-COPY server /server
+COPY workers /workers
 COPY requirements.txt requirements.txt
 COPY config.ini config.ini
 RUN pip install -r requirements.txt
 
-
-EXPOSE 5000
-
-ENTRYPOINT ["python", "-m", "server"]
+ENTRYPOINT ["python", "-m", "workers"]

@@ -1,5 +1,6 @@
 import pika
 import pickle
+import time
 from furl import furl
 # todo: loger by mq
 
@@ -11,13 +12,19 @@ class SnanpshotPublisher():
         self.host = host
 
     def __enter__(self):
-        x = furl("rabbitmq://mq-asd:5672")
-        self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(x.host, x.port))
-        self.channel = self.connection.channel()
-        for field in config:
-            self.channel.queue_declare(queue=field, durable=True)
-        return self
+        # on docker usually fails on the first time since mq didn't start to run
+        for i in range(2):
+            try:
+                x = furl("rabbitmq://mq-asd:5672")
+                self.connection = pika.BlockingConnection(
+                    pika.ConnectionParameters(x.host, x.port))
+                self.channel = self.connection.channel()
+                for field in config:
+                    self.channel.queue_declare(queue=field, durable=True)
+                return self
+            except Exception:
+                time.sleep(5)
+                
 
     def publish(self, snapshot, user_id, datetime):
         for field in config:

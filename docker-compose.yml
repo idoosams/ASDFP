@@ -1,23 +1,80 @@
 version: "3"
 
 services:
+    mq-asd:
+        image: "rabbitmq:3-management"
+        ports:
+            - 5672:5672
+            - 15672:15672
+        networks:
+            - asd-net
+
     server-asd: 
         build:
             context: "./asd"
             dockerfile: "./server/Dockerfile"
         ports: 
             - 5000:5000
+        command: ["run_server"]
         depends_on:
             - mq-asd
         networks:
             - asd-net
-
-    mq-asd:
-        image: "rabbitmq"
-        ports:
-            - 5672:5672
+        volumes: 
+            - ./data:/data
+    
+    pose-asd:
+        build:
+            context: "./asd"
+            dockerfile: "./workers/Dockerfile"
+        command: ["-w", "pose"]
+        depends_on:
+            - mq-asd
         networks:
             - asd-net
+        volumes: 
+            - ./data:/data
+        restart: on-failure
+
+    color_image-asd:
+        build:
+            context: "./asd"
+            dockerfile: "./workers/Dockerfile"
+        command: ["-w", "color_image"]
+        depends_on:
+            - mq-asd
+        networks:
+            - asd-net
+        volumes: 
+            - ./data:/data
+        restart: on-failure
+
+    
+    depth_image-asd:
+        build:
+            context: "./asd"
+            dockerfile: "./workers/Dockerfile"
+        command: ["-w", "depth_image"]
+        depends_on:
+            - mq-asd
+        networks:
+            - asd-net
+        volumes: 
+            - ./data:/data
+        restart: on-failure
+
+    feelings-asd:
+        build:
+            context: "./asd"
+            dockerfile: "./workers/Dockerfile"
+        command: ["-w", "feelings"]
+        depends_on:
+            - mq-asd
+        networks:
+            - asd-net
+        volumes: 
+            - ./data:/data
+        restart: on-failure
 
 networks:
     asd-net:

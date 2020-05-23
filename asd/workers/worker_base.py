@@ -1,5 +1,8 @@
 import pika
 import pickle
+from furl import furl
+import time
+import click
 
 
 class Worker():
@@ -7,11 +10,20 @@ class Worker():
         self.queue_name = queue_name
         self.db_publisher = db_publisher
         self.payload_handler = payload_handler
-        connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='localhost'))
-        self.channel = connection.channel()
-        self.channel.queue_declare(queue='pose', durable=True)
-        print(' [*] Waiting for messages. To exit press CTRL+C')
+        self.channel = None
+        for i in range(2):
+            try:
+                x = furl("rabbitmq://mq-asd:5672")
+                self.connection = pika.BlockingConnection(
+                    pika.ConnectionParameters(x.host, x.port))
+                # self.connection = pika.BlockingConnection(
+                #     pika.ConnectionParameters('localhost'))
+                self.channel = self.connection.channel()
+                self.channel.queue_declare(queue=queue_name, durable=True)
+                click.echo("succssed to init")
+            except Exception:
+                time.sleep(5)
+        click.echo(' [*] Waiting for messages. To exit press CTRL+C')
 
     def callback(self, ch, method, properties, body):
         payload = pickle.loads(body)

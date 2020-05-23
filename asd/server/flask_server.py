@@ -34,13 +34,13 @@ class Server():
         self.app.run(host=self.host, port=self.port)
 
 
-if __name__ == "__main__":
-    from .snanpshot_publisher import SnanpshotPublisher
-    from .snapshot_formater import SnapshotFormater
-    # datetime in mandatory in every snapshot!
-    config = ['datetime', 'pose', 'color_image', 'feelings', 'depth_image']
-    server = Server()
-    datapath = "/home/idos/Desktop/Advenced-System-Design/ASDFP/asd/data"
-    server.run_server(config, SnapshotFormater(),
-                      SnanpshotPublisher(), datapath)
-    app = server.app
+# if __name__ == "__main__":
+#     from .snanpshot_publisher import SnanpshotPublisher
+#     from .snapshot_formater import SnapshotFormater
+#     # datetime in mandatory in every snapshot!
+#     config = ['datetime', 'pose', 'color_image', 'feelings', 'depth_image']
+#     server = Server()
+#     datapath = "/home/idos/Desktop/Advenced-System-Design/ASDFP/asd/data"
+#     server.run_server(config, SnapshotFormater(),
+#                       SnanpshotPublisher(), datapath)
+#     app = server.app
