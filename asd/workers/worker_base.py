@@ -11,7 +11,7 @@ class Worker():
         self.db_publisher = db_publisher
         self.payload_handler = payload_handler
         self.channel = None
-        for i in range(2):
+        for i in range(5):
             try:
                 x = furl("rabbitmq://mq-asd:5672")
                 self.connection = pika.BlockingConnection(
@@ -21,8 +21,11 @@ class Worker():
                 self.channel = self.connection.channel()
                 self.channel.queue_declare(queue=queue_name, durable=True)
                 click.echo("succssed to init")
-            except Exception:
-                time.sleep(5)
+                return
+            except Exception as e:
+                if i==4:
+                    raise e
+                time.sleep(10)
         click.echo(' [*] Waiting for messages. To exit press CTRL+C')
 
     def callback(self, ch, method, properties, body):

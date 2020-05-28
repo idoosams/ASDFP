@@ -9,6 +9,14 @@ services:
         networks:
             - asd-net
 
+    mongo-asd:
+        image: 'mongo'
+        ports:
+            - '27017:27017'
+        networks:
+            - asd-net
+          
+
     server-asd: 
         build:
             context: "./asd"
@@ -70,6 +78,20 @@ services:
         command: ["-w", "feelings"]
         depends_on:
             - mq-asd
+        networks:
+            - asd-net
+        volumes: 
+            - ./data:/data
+        restart: on-failure
+
+    db-asd:
+        build:
+            context: "./asd"
+            dockerfile: "./dbclient/Dockerfile"
+        command: ["run"]
+        depends_on:
+            - mq-asd
+            - mongo-asd
         networks:
             - asd-net
         volumes: 
