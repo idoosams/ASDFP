@@ -1,19 +1,37 @@
 import pika
 import pickle
-from saver import MongoSaver as Saver
+from furl import furl
+import time
+import click
+from .saver import MongoSaver as Saver
 
 
 class DbConsumer():
-    def __init__(self):
-        connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='localhost'))
-        self.channel = connection.channel()
-        self.channel.queue_declare(queue='db_feed', durable=True)
-        print(' [*] Waiting for messages. To exit press CTRL+C')
+    def __init__(self, host, port):
+        click.echo("enter to init")
+        self.host = host
+        self.port = port
+        self.channel = None
+        for i in range(5):
+            try:
+                click.echo("start to init")
+                x = furl("rabbitmq://mq-asd:5672")
+                self.connection = pika.BlockingConnection(
+                    pika.ConnectionParameters(x.host, x.port))
+                # self.connection = pika.BlockingConnection(
+                #     pika.ConnectionParameters('localhost'))
+                self.channel = self.connection.channel()
+                self.channel.queue_declare(queue='db_feed', durable=True)
+                click.echo("succssed to init")
+                return
+            except Exception as e:
+                if i==4:
+                    raise e
+                time.sleep(10)
 
     def callback(self, ch, method, properties, body):
         payload = pickle.loads(body)
-        Saver().save(payload)
+        Saver(self.host, self.port).save(payload)
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def start_consuming(self):
@@ -21,6 +39,3 @@ class DbConsumer():
         self.channel.basic_consume(queue="db_feed",
                                    on_message_callback=self.callback)
         self.channel.start_consuming()
-
-
-DbConsumer().start_consuming()

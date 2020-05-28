@@ -6,7 +6,7 @@ from .proto_parser import Parser
 
 @click.group()
 @click.pass_obj
-@click.option('-h', 'host', default='127.0.0.1')
+@click.option('-h', 'host', default='0.0.0.0')
 @click.option('-p', 'port', default='5000')
 def cli_client(obj, host, port):
     obj['Client'] = Client(host, port)

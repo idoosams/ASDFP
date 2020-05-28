@@ -9,6 +9,6 @@ class ServerRunner():
         # datetime in mandatory in every snapshot!
         config = ['datetime', 'pose', 'color_image', 'feelings', 'depth_image']
         server = Server(host=host, port=port)
-        datapath = "/home/idos/Desktop/Advenced-System-Design/ASDFP/asd/data"
+        datapath = "../data"
         server.run_server(config, SnapshotFormater(),
                           SnanpshotPublisher(), datapath)
