@@ -83,6 +83,19 @@ services:
         volumes: 
             - ./data:/data
         restart: on-failure
+    
+    users-asd:
+        build:
+            context: "./asd"
+            dockerfile: "./workers/Dockerfile"
+        command: ["--w", "users", "--config_path", "/config.ini"]
+        depends_on:
+            - mq-asd
+        networks:
+            - asd-net
+        volumes: 
+            - ./data:/data
+        restart: on-failure
 
     db-asd:
         build:

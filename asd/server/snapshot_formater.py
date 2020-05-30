@@ -1,5 +1,5 @@
 import pathlib
-from .asd_pb2 import Snapshot
+from .asd_pb2 import Snapshot, User
 import json
 
 
@@ -16,6 +16,15 @@ class SnapshotFormater:
             "pose": self._pose_handler(snapshot_obj),
         }
         return json_snapshot
+
+    def format_user(self, user):
+        user_obj = User.FromString(user)
+        return {
+            "username": user_obj.username,
+            "gender": user_obj.gender,
+            "birthday": user_obj.birthday,
+            "user_id": user_obj.user_id,
+        }
 
     def _color_image_handler(self, snapshot, user_id, data_path):
         color_image, datetime = snapshot.color_image, snapshot.datetime

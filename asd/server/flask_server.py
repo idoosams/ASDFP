@@ -1,6 +1,3 @@
-# based on:
-# https://dev.to/duomly/how-to-create-a-simple-rest-api-with-python-/and-flask-in-5-minutes-3edg
-
 from flask import Flask, request
 from flask_restful import Resource, Api
 import json
@@ -19,17 +16,24 @@ class Server():
             def get(self):
                 return json.dumps(fields), 200
 
+        class users_callback(Resource):
+            def post(self):
+                user_dict = snapshot_formater.format_user(request.data)
+                with snanpshot_publisher as publisher:
+                    publisher.publish_user(user_dict)
+
         class snapshot_callback(Resource):
             def post(self, user_id):
                 snapshot_dict = snapshot_formater.format_snapshot(
                     request.data, user_id, data_path)
                 with snanpshot_publisher as publisher:
-                    publisher.publish(snapshot_dict, user_id,
-                                      snapshot_dict["datetime"])
+                    publisher.publish_snapshot(snapshot_dict, user_id,
+                                               snapshot_dict["datetime"])
 
         self.app = Flask(__name__)
         self.api = Api(self.app)
         self.api.add_resource(fields_callback, '/fields/')
+        self.api.add_resource(users_callback, '/users/')
         self.api.add_resource(snapshot_callback, '/<user_id>/snapshot')
         self.app.run(host=self.host, port=self.port)
 

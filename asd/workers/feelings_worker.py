@@ -1,6 +1,6 @@
-import json
 from .db_publisher import DBPublisher
 from .worker_base import Worker
+from .utills import parse_payload
 
 
 class FeelingsWorker:
@@ -12,8 +12,10 @@ class FeelingsWorker:
 
     @staticmethod
     def payload_handler(payload):
-        data = payload['data']
-        return json.dumps(data)
+        feelings, user_id, datetime = parse_payload(payload)
+        return {"data": feelings,
+                "user_id": user_id,
+                "datetime": datetime}
 
 
 if __name__ == "__main__":

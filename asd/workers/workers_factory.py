@@ -2,6 +2,7 @@ from .depth_image_worker import DepthImgWorker
 from .feelings_worker import FeelingsWorker
 from .pose_worker import PoseWorker
 from .color_image_worker import ColorImgWorker
+from .users_worker import UserWorker
 
 config = ['pose', 'color_image', 'feelings', 'depth_image']
 
@@ -20,4 +21,6 @@ class WorkersFactory:
             w.data_path = data_path
             return w
         elif name == 'depth_image':
-            return DepthImgWorker
+            return DepthImgWorker()
+        elif name == 'users':
+            return UserWorker()

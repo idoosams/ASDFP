@@ -29,9 +29,9 @@ class Client:
         return 0
 
     def post_user(self, user):
-        ep = f'{self.server_add}/users/{user.user_id}'
+        ep = f'{self.server_add}/users'
         result = requests.post(ep, user.SerializeToString())
-        if result.status_code != 200:
+        if result.status_code != 201:
             return 1
         return 0
 
@@ -40,6 +40,7 @@ class Client:
         if not self.reader:
             return i
         with self.reader as reader:
+            self.post_user(reader.user)
             for snapshot in reader:
                 result = self.post_snapshot(snapshot, reader.user.user_id)
                 if result == 0:
