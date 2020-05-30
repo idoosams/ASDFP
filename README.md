@@ -1,4 +1,4 @@
-![build status](https://travis-ci.com/idoosams/ASDFP.svg?branch=pytestAndCI)
+![build status](https://travis-ci.com/idoosams/ASDFP.svg?branch=master)
 ![coverage](https://codecov.io/gh/dan-gittik/foobar/branch/master/graph/badge.svg)
 
 # Foobar
