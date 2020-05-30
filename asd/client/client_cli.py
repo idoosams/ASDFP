@@ -6,7 +6,7 @@ from .proto_parser import Parser
 
 @click.group()
 @click.pass_obj
-@click.option('-h', 'host', default='0.0.0.0')
+@click.option('-h', 'host', default='127.0.0.1')
 @click.option('-p', 'port', default='5000')
 def cli_client(obj, host, port):
     obj['Client'] = Client(host, port)
@@ -22,7 +22,7 @@ def upload_sample(obj, path):
     client.upload_sample()
 
 
-@cli_client.command('get_config')
+@cli_client.command('get_fields')
 @click.pass_obj
 def get_config(obj):
     client = obj['Client']

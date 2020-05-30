@@ -4,14 +4,14 @@ from .worker_base import Worker
 import pathlib
 from .utills import parse_payload
 
-db_path = "../data"
-
 
 class ColorImgWorker:
+    data_path = "../data"  # defualt value
+
     @staticmethod
-    def run():
+    def run(mq_url):
         worker = Worker(ColorImgWorker.payload_handler,
-                        DBPublisher(), 'color_image')
+                        DBPublisher(mq_url), 'color_image', mq_url)
         worker.start_consuming()
 
     @staticmethod
@@ -26,7 +26,8 @@ class ColorImgWorker:
         size = (color_image['width'], color_image['height'])
         data_path = color_image['data_path']
 
-        path = pathlib.Path(db_path) / user_id / 'color_images'
+        path = pathlib.Path(ColorImgWorker.data_path) / \
+            user_id / 'color_images'
         path.mkdir(parents=True, exist_ok=True)
         path = path / f'{datetime}.jpg'
 

@@ -6,24 +6,24 @@ import click
 
 
 class Worker():
-    def __init__(self, payload_handler, db_publisher, queue_name):
+    def __init__(self, payload_handler, db_publisher, queue_name,
+                 mq_url='rabbitmq://127.0.0.1:5672'):
         self.queue_name = queue_name
         self.db_publisher = db_publisher
         self.payload_handler = payload_handler
         self.channel = None
         for i in range(5):
             try:
-                x = furl("rabbitmq://mq-asd:5672")
+                click.echo(f"{mq_url}")
+                x = furl(mq_url)
                 self.connection = pika.BlockingConnection(
                     pika.ConnectionParameters(x.host, x.port))
-                # self.connection = pika.BlockingConnection(
-                #     pika.ConnectionParameters('localhost'))
                 self.channel = self.connection.channel()
                 self.channel.queue_declare(queue=queue_name, durable=True)
                 click.echo("succssed to init")
                 return
             except Exception as e:
-                if i==4:
+                if i == 4:
                     raise e
                 time.sleep(10)
         click.echo(' [*] Waiting for messages. To exit press CTRL+C')
