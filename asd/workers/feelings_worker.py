@@ -5,9 +5,9 @@ from .worker_base import Worker
 
 class FeelingsWorker:
     @staticmethod
-    def run():
+    def run(mq_url):
         worker = Worker(FeelingsWorker.payload_handler,
-                        DBPublisher(), 'feelings')
+                        DBPublisher(mq_url), 'feelings', mq_url)
         worker.start_consuming()
 
     @staticmethod

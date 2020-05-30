@@ -6,14 +6,14 @@ from matplotlib.pyplot import imshow, savefig
 import numpy
 import json
 
-db_path = "../data"
-
 
 class DepthImgWorker:
+    data_path = "../data"  # defualt value
+
     @staticmethod
-    def run():
+    def run(mq_url):
         worker = Worker(DepthImgWorker.payload_handler,
-                        DBPublisher(), 'depth_image')
+                        DBPublisher(mq_url), 'depth_image', mq_url)
         worker.start_consuming()
 
     @staticmethod
@@ -28,7 +28,8 @@ class DepthImgWorker:
             payload['user_id'], \
             payload['datetime']
 
-        path = pathlib.Path(db_path) / user_id / 'depth_images'
+        path = pathlib.Path(DepthImgWorker.data_path) / \
+            user_id / 'depth_images'
         path.mkdir(parents=True, exist_ok=True)
         path = path / f'{datetime}.jpg'
 

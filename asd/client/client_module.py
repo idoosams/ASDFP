@@ -13,7 +13,7 @@ class Client:
         self.update_config()
 
     def update_config(self):
-        result = requests.get(f'{self.server_add}/config')
+        result = requests.get(f'{self.server_add}/fields')
         if result.status_code != 200:
             return
         self.server_config = json.loads(result.json())

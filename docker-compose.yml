@@ -23,7 +23,7 @@ services:
             dockerfile: "./server/Dockerfile"
         ports: 
             - 5000:5000
-        command: ["run_server"]
+        command: ["run_server", "--config_path", "/config.ini"]
         depends_on:
             - mq-asd
         networks:
@@ -35,7 +35,7 @@ services:
         build:
             context: "./asd"
             dockerfile: "./workers/Dockerfile"
-        command: ["-w", "pose"]
+        command: ["--w", "pose", "--config_path", "/config.ini"]
         depends_on:
             - mq-asd
         networks:
@@ -48,7 +48,7 @@ services:
         build:
             context: "./asd"
             dockerfile: "./workers/Dockerfile"
-        command: ["-w", "color_image"]
+        command: ["--w", "color_image", "--config_path", "/config.ini"]
         depends_on:
             - mq-asd
         networks:
@@ -62,7 +62,7 @@ services:
         build:
             context: "./asd"
             dockerfile: "./workers/Dockerfile"
-        command: ["-w", "depth_image"]
+        command: ["--w", "depth_image", "--config_path", "/config.ini"]
         depends_on:
             - mq-asd
         networks:
@@ -75,7 +75,7 @@ services:
         build:
             context: "./asd"
             dockerfile: "./workers/Dockerfile"
-        command: ["-w", "feelings"]
+        command: ["--w", "feelings", "--config_path", "/config.ini"]
         depends_on:
             - mq-asd
         networks:
@@ -88,7 +88,7 @@ services:
         build:
             context: "./asd"
             dockerfile: "./dbclient/Dockerfile"
-        command: ["run"]
+        command: ["run", "--config_path", "/config.ini"]
         depends_on:
             - mq-asd
             - mongo-asd

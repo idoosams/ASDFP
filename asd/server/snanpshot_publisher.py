@@ -4,30 +4,29 @@ import time
 from furl import furl
 # todo: loger by mq
 
-config = ['datetime', 'pose', 'color_image', 'feelings', 'depth_image']
-
 
 class SnanpshotPublisher():
-    def __init__(self, host='0.0.0.0'):
-        self.host = host
+    def __init__(self, queues, url='rabbitmq://127.0.0.1:5672'):
+        self.url = furl(url)
+        self.queues = queues[:]
+        self.queues.remove('datetime')  # passed in every queue
 
     def __enter__(self):
-        # on docker usually fails on the first time since mq didn't start to run
-        for i in range(2):
+        # on docker usually fails on the first time since mq didn't start
+        # to run
+        for i in range(5):
             try:
-                x = furl("rabbitmq://mq-asd:5672")
                 self.connection = pika.BlockingConnection(
-                    pika.ConnectionParameters(x.host, x.port))
+                    pika.ConnectionParameters(self.url.host, self.url.port))
                 self.channel = self.connection.channel()
-                for field in config:
+                for field in self.queues:
                     self.channel.queue_declare(queue=field, durable=True)
                 return self
             except Exception:
-                time.sleep(5)
-                
+                time.sleep(10)
 
     def publish(self, snapshot, user_id, datetime):
-        for field in config:
+        for field in self.queues:
             attr = snapshot.get(field)
             if attr:
                 self.channel.basic_publish(

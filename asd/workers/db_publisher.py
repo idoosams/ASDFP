@@ -1,18 +1,16 @@
 import pika
 import pickle
-import time
 from furl import furl
 # todo: loger by mq
 
 
 class DBPublisher():
-    def __init__(self, host='localhost'):
-        self.host = host
+    def __init__(self,  url='rabbitmq://127.0.0.1:5672'):
+        self.url = furl(url)
 
     def __enter__(self):
-        x = furl("rabbitmq://mq-asd:5672")
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(x.host, x.port))
+            pika.ConnectionParameters(self.url.host, self.url.port))
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue="db_feed", durable=True)
         return self

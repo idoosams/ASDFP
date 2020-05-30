@@ -5,9 +5,9 @@ from .worker_base import Worker
 
 class PoseWorker:
     @staticmethod
-    def run():
+    def run(mq_url):
         worker = Worker(PoseWorker.payload_handler,
-                        DBPublisher(), 'pose')
+                        DBPublisher(mq_url), 'pose', mq_url)
         worker.start_consuming()
 
     @staticmethod

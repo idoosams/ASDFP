@@ -13,11 +13,11 @@ class Server():
         self.host = host
         self.port = port
 
-    def run_server(self, config, snapshot_formater,
+    def run_server(self, fields, snapshot_formater,
                    snanpshot_publisher, data_path):
-        class config_callback(Resource):
+        class fields_callback(Resource):
             def get(self):
-                return json.dumps(config), 200
+                return json.dumps(fields), 200
 
         class snapshot_callback(Resource):
             def post(self, user_id):
@@ -29,7 +29,7 @@ class Server():
 
         self.app = Flask(__name__)
         self.api = Api(self.app)
-        self.api.add_resource(config_callback, '/config/')
+        self.api.add_resource(fields_callback, '/fields/')
         self.api.add_resource(snapshot_callback, '/<user_id>/snapshot')
         self.app.run(host=self.host, port=self.port)
 
