@@ -43,4 +43,4 @@ class Server():
 #     datapath = "/home/idos/Desktop/Advenced-System-Design/ASDFP/asd/data"
 #     server.run_server(config, SnapshotFormater(),
 #                       SnanpshotPublisher(), datapath)
-#     app = server.app
+#     app = server.app sdasad
