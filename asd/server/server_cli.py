@@ -13,7 +13,7 @@ def cli_client():
 @cli_client.command('run_server')
 @click.option('--h', 'host', default="127.0.0.1")
 @click.option('--p', 'port', default="5000")
-@click.option('--fields', 'fields', default="")
+@click.option('--fields', 'fields', default="datetime,pose,color_image,feelings,depth_image")
 @click.option('--data_path', 'data_path', default="../data")
 @click.option('--mq_url', 'mq_url', default="rabbitmq://127.0.0.1:5672")
 @click.option('--config_path', 'config_path')
