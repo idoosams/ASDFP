@@ -15,8 +15,9 @@ class Client:
     def update_config(self):
         result = requests.get(f'{self.server_add}/fields')
         if result.status_code != 200:
-            return
+            return 1
         self.server_config = json.loads(result.json())
+        return 0
 
     def post_snapshot(self, snapshot, user_id):
         ep = f'{self.server_add}/{user_id}/snapshot'
@@ -24,17 +25,23 @@ class Client:
             snapshot = self.parser.parse_snapshot(snapshot, self.server_config)
         result = requests.post(ep, snapshot.SerializeToString())
         if result.status_code != 201:
-            return
+            return 1
+        return 0
 
     def post_user(self, user):
         ep = f'{self.server_add}/users/{user.user_id}'
         result = requests.post(ep, user.SerializeToString())
         if result.status_code != 200:
-            return
+            return 1
+        return 0
 
     def upload_sample(self):
+        i = 0
         if not self.reader:
-            return
+            return i
         with self.reader as reader:
             for snapshot in reader:
-                self.post_snapshot(snapshot, reader.user.user_id)
+                result = self.post_snapshot(snapshot, reader.user.user_id)
+                if result == 0:
+                    i = i+1
+        return i

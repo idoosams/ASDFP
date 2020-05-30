@@ -16,6 +16,7 @@ class Reader():
 
     def __enter__(self):
         self._fd = gzip.open(self._path)
+        # self._fd2 = gzip.open("/home/idos/Desktop/ASDFP/tests/data_mocks/mock_sample.mind.gz", mode='wb')
         self.user = self._get_user()
         return self
 
@@ -24,8 +25,11 @@ class Reader():
         self.user = None
 
     def _get_user(self):
-        msg_size = struct.unpack("I", self._fd.read(4))[0]
+        buf = self._fd.read(4)
+        msg_size = struct.unpack("I", buf)[0]
+        # self._fd2.write(buf)
         msg_bytes = self._fd.read(msg_size)
+        # self._fd2.write(msg_bytes)
         return User.FromString(msg_bytes)
 
     def __iter__(self):
@@ -33,7 +37,10 @@ class Reader():
             buf = self._fd.read(4)
             if len(buf) == 4:
                 msg_size = struct.unpack("I", buf)[0]
+                # self._fd2.write(buf)
                 msg_bytes = self._fd.read(msg_size)
+                # self._fd2.write(msg_bytes)
+                # self._fd2.close()
                 snapshot = Snapshot.FromString(msg_bytes)
             else:
                 if (buf != ''):  # todo: handel errors
