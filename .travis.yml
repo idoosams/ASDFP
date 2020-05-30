@@ -2,8 +2,8 @@ language: python
 python:
   - "3.8"
 install:
-  - pip install -r requirements.txt
+  - pip install -r asd/requirements.txt
 script:
-  - pytest --cov-report term --cov=foobar
+  - pytest
 after_success:
   - codecov
