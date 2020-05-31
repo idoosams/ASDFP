@@ -1,10 +1,6 @@
-FROM python:3
+FROM asd-base:latest
 
 COPY server /server
-COPY requirements.txt requirements.txt
-COPY config.ini config.ini
-RUN pip install -r requirements.txt
-
 
 EXPOSE 5000
 
