@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-from .utills import parse_payload
 
 
 class MongoSaver:
@@ -23,3 +22,8 @@ class MongoSaver:
         table = self.db[table_name]
         table.insert_one(mongo_doc)
         print(f'new {table_name}')
+
+
+def parse_payload(payload):
+    return payload['data'],\
+        payload['table_name']

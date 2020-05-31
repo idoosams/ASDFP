@@ -1,6 +1,5 @@
 
 from pymongo import MongoClient
-from .utills import parse_payload
 
 
 class AsdMongoClient:
@@ -30,10 +29,15 @@ class AsdMongoClient:
         return [x for x in table.find(query)]
 
     def get_user(self, user_id):
-        return self.get_data({"user_id": int(user_id)}, "users")
+        return self.get_data({"user_id": user_id}, "users")
 
     def get_users(self, query={}):
         return self.get_data(query, "users")
 
     def get_data_by_user_id(self, user_id, table_name):
         return self.get_data({"user_id": user_id}, table_name)
+
+
+def parse_payload(payload):
+    return payload['data'],\
+        payload['table_name']

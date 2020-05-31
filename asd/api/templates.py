@@ -10,11 +10,11 @@ def UserTemplate(user):
     """
 
 
-def MultiFeelingsTemplate(feelings):
+def MultiFeelingsTemplate(feelings_list):
     res = ""
-    for singel_feelings in feelings:
-        res += SingleFeelingsTemplate(singel_feelings["value"],
-                                      singel_feelings["datetime"])
+    for feelings in feelings_list:
+        res += SingleFeelingsTemplate(feelings["value"],
+                                      feelings["datetime"])
     return res
 
 
@@ -30,13 +30,28 @@ def SingleFeelingsTemplate(feelings, datetime):
     """
 
 
-def PoseTemplate(user):
+def MultiPoseTemplate(pose_list):
+    res = ""
+    for pose in pose_list:
+        res += SinglePoseTemplate(pose["value"],
+                                  pose["datetime"])
+    return res
+
+
+def SinglePoseTemplate(pose, datetime):
     return f"""
-  <h3>User #{user['user_id']}:</h3>
+    <h4>Datetime - {datetime}</h4>
     <ul>
-        <li>username : {user['username']}</li>
-        <li>gender : {user['gender']}</li>
-        <li>birthday : {user['birthday']}</li>
-        <li>user id : {user['user_id']}</li>
+        <li>
+            translation : x={pose['translation']['x']},
+            y={pose['translation']['y']},
+            z={pose['translation']['z']}
+        </li>
+        <li>rotation :
+            x={pose['rotation']['x']},
+            y={pose['rotation']['y']},
+            z={pose['rotation']['z']},
+            w={pose['rotation']['w']}
+        </li>
     </ul>
     """

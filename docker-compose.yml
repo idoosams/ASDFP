@@ -29,8 +29,22 @@ services:
         networks:
             - asd-net
         volumes: 
-            - ./data:/data
-    
+            - ./asd/data:/data
+
+    api-asd: 
+        build:
+            context: "./asd"
+            dockerfile: "./api/Dockerfile"
+        ports: 
+            - 8000:8000
+        command: ["run", "--config_path", "/config.ini"]
+        depends_on:
+            - mongo-asd
+        networks:
+            - asd-net
+        volumes: 
+            - ./asd/data:/data
+
     pose-asd:
         build:
             context: "./asd"
@@ -41,7 +55,7 @@ services:
         networks:
             - asd-net
         volumes: 
-            - ./data:/data
+            - ./asd/data:/data
         restart: on-failure
 
     color_image-asd:
@@ -54,7 +68,7 @@ services:
         networks:
             - asd-net
         volumes: 
-            - ./data:/data
+            - ./asd/data:/data
         restart: on-failure
 
     
@@ -68,7 +82,7 @@ services:
         networks:
             - asd-net
         volumes: 
-            - ./data:/data
+            - ./asd/data:/data
         restart: on-failure
 
     feelings-asd:
@@ -81,7 +95,7 @@ services:
         networks:
             - asd-net
         volumes: 
-            - ./data:/data
+            - ./asd/data:/data
         restart: on-failure
     
     users-asd:
@@ -94,7 +108,7 @@ services:
         networks:
             - asd-net
         volumes: 
-            - ./data:/data
+            - ./asd/data:/data
         restart: on-failure
 
     db-asd:
@@ -108,7 +122,7 @@ services:
         networks:
             - asd-net
         volumes: 
-            - ./data:/data
+            - ./asd/data:/data
         restart: on-failure
 
 networks:
