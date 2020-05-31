@@ -41,3 +41,11 @@ An example package. See [full documentation](https://asdfp.readthedocs.io/en/lat
     $ docker-compose up -d
     ```
 2. you can generate configfiles with the config file generator (by defualt docker runs by configfile asd/config.ini).
+
+3. 1. server (accept the sample) avaliable at port 5000
+   2. Api\GUI(sorry about that :( ) at port 8000
+   3. mq mannager is avaliable at the defult port 15672. (5672 avaliable as well)
+   4. mongo db avaliable at the defult port 27017
+
+4. data is presistent in asd/data (can be chaged into a virtual volume at the docker-compose file)
+    
