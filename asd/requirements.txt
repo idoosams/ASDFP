@@ -29,6 +29,7 @@ more-itertools==7.2.0
 numpy==1.18.4
 orderedmultidict==1.0.1
 packaging==19.2
+pbr==5.4.5
 pika==1.1.0
 Pillow==7.1.2
 pluggy==0.13.1
@@ -49,6 +50,7 @@ requests==2.22.0
 six==1.13.0
 snowballstemmer==2.0.0
 Sphinx==2.2.1
+sphinx-click==2.3.2
 sphinxcontrib-applehelp==1.0.1
 sphinxcontrib-devhelp==1.0.1
 sphinxcontrib-htmlhelp==1.0.2
