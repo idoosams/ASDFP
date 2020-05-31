@@ -34,8 +34,6 @@ class Worker():
         with self.db_publisher as publisher:
             publisher.publish(
                 db_payload,
-                payload['user_id'],
-                payload['datetime'],
                 self.queue_name)
         ch.basic_ack(delivery_tag=method.delivery_tag)
 

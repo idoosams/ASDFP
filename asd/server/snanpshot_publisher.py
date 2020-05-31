@@ -19,13 +19,25 @@ class SnanpshotPublisher():
                 self.connection = pika.BlockingConnection(
                     pika.ConnectionParameters(self.url.host, self.url.port))
                 self.channel = self.connection.channel()
-                for field in self.queues:
-                    self.channel.queue_declare(queue=field, durable=True)
+                for queue in self.queues:
+                    self.channel.queue_declare(queue=queue, durable=True)
+                self.channel.queue_declare(queue="users", durable=True)
                 return self
             except Exception:
                 time.sleep(10)
 
-    def publish(self, snapshot, user_id, datetime):
+    def publish_user(self, user):
+        self.channel.basic_publish(
+            exchange='',
+            routing_key="users",
+            body=pickle.dumps(
+                user),
+            properties=pika.BasicProperties(
+                delivery_mode=2,  # make message persistent
+            ))
+        print("User Sent")
+
+    def publish_snapshot(self, snapshot, user_id, datetime):
         for field in self.queues:
             attr = snapshot.get(field)
             if attr:

@@ -37,7 +37,9 @@ class ColorImgWorker:
         image = PIL.frombytes(data=img_data, mode='RGB', size=size)
         image.save(path)
 
-        return str(path)
+        return {"data": str(path),
+                "user_id": user_id,
+                "datetime": datetime}
 
 
 if __name__ == "__main__":
