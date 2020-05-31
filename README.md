@@ -1,7 +1,7 @@
 ![build status](https://travis-ci.com/idoosams/ASDFP.svg?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/asdfp/badge/?version=latest)](https://asdfp.readthedocs.io/en/latest/?badge=latest)
 
-# Foobar
+# ASDFP - Advanced System Design Final Project
 
 An example package. See [full documentation](https://asdfp.readthedocs.io/en/latest/?badge=latest).
 
