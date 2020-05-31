@@ -80,5 +80,5 @@ class SnapshotFormater:
             }}
 
     def _format_datetime(self, datetime):
-        _datetime = dt.fromtimestamp(datetime/1000.0)
+        _datetime = dt.utcfromtimestamp(datetime/1000.0)
         return _datetime.strftime('%Y-%m-%d_%H:%M:%S.%f')
