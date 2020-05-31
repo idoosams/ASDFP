@@ -6,7 +6,17 @@ import click
 
 
 class DbConsumer():
+    """
+    DbConsumer Class
+    consume the data from the mq and send that to the Saver
+    """
+
     def __init__(self, saver, mq_url='rabbitmq://127.0.0.1:5672'):
+        """
+        Declare the queues and configures the connection
+        :param saver: 
+        :param mq_url: defaults to 'rabbitmq://127.0.0.1:5672'
+        """
         click.echo("enter to init")
         self.saver = saver
         self.channel = None
@@ -33,6 +43,9 @@ class DbConsumer():
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def start_consuming(self):
+        """
+        Start to consume
+        """
         self.channel.basic_qos(prefetch_count=1)
         self.channel.basic_consume(queue="db_feed",
                                    on_message_callback=self.callback)

@@ -6,8 +6,17 @@ import click
 
 
 class Worker():
+    """
+    The base class of the workers
+    """
     def __init__(self, payload_handler, db_publisher, queue_name,
                  mq_url='rabbitmq://127.0.0.1:5672'):
+        """
+        :param payload_handler:
+        :param db_publisher:
+        :param queue_name: queue to listen to
+        :param mq_url: [description], defaults to 'rabbitmq://127.0.0.1:5672'
+        """
         self.queue_name = queue_name
         self.db_publisher = db_publisher
         self.payload_handler = payload_handler

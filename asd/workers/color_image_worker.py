@@ -6,10 +6,18 @@ from .utills import parse_payload
 
 
 class ColorImgWorker:
+    """
+    ColorImgWorker Class
+    """
     data_path = "../data"  # defualt value
 
     @staticmethod
     def run(mq_url):
+        """
+        Start consuming and handles the data from the mq
+
+        :param mq_url:
+        """
         worker = Worker(ColorImgWorker.payload_handler,
                         DBPublisher(mq_url), 'color_image', mq_url)
         worker.start_consuming()

@@ -79,5 +79,3 @@ def test_client_e2e(httpserver, tmp_path, mock_respone):
     number_of_snapshots = client.upload_sample()
 
     assert number_of_snapshots == 1
-
-

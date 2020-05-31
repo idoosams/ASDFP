@@ -9,6 +9,14 @@ from .workers_factory import WorkersFactory
 @click.option('--data_path', 'data_path', default="../data")
 @click.option('--config_path', 'config_path')
 def cli_client(worker_name, mq_url, data_path, config_path):
+    """
+    Start the worker
+
+    :param worker_name:
+    :param mq_url:
+    :param data_path:
+    :param config_path:
+    """
     if config_path:
         config = configparser.ConfigParser()
         config.read(config_path)

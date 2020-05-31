@@ -10,6 +10,11 @@ app = flask.Flask(__name__)
 
 @app.route('/users', methods=['GET'])
 def get_users():
+    """
+    Gets the users
+
+    EP - /users
+    """
     response = ""
     users_list = app.config['db'].get_users()
     for user in users_list:
@@ -19,6 +24,11 @@ def get_users():
 
 @app.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
+    """
+    Get a user
+
+    EP - /users/<user_id>
+    """
     res = app.config['db'].get_user(user_id)
     if len(res) >= 1:
         return UserTemplate(res[0]["value"])
@@ -27,6 +37,11 @@ def get_user(user_id):
 
 @app.route('/users/<user_id>/feelings', methods=['GET'])
 def get_feelings(user_id):
+    """
+    Gets the feelings of a user
+
+    EP - /users/<user_id>/feelings
+    """
     res = app.config['db'].get_data_by_user_id(user_id,
                                                "feelings")
     if len(res) >= 1:
@@ -36,6 +51,11 @@ def get_feelings(user_id):
 
 @ app.route('/users/<user_id>/poses', methods=['GET'])
 def get_pose(user_id):
+    """
+    Gets the poses of a user
+
+    EP - /users/<user_id>/poses
+    """
     res = app.config['db'].get_data_by_user_id(user_id,
                                                "pose")
     if len(res) >= 1:
@@ -44,7 +64,13 @@ def get_pose(user_id):
 
 
 @ app.route('/users/<user_id>/<img_kind>/<datetime>', methods=['GET'])
-def get_color_image(user_id, img_kind, datetime):
+def get_image(user_id, img_kind, datetime):
+    """
+    Gets a image of a user by datetime
+
+    EP - /users/<user_id>/<img_kind>/<datetime>
+    <img_kind> : ['color_image', 'depth_image']
+    """
     res = app.config['db'].get_data({"user_id": user_id,
                                      "datetime": datetime}, img_kind)
     if len(res) >= 1:

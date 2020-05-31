@@ -7,12 +7,24 @@ class Client:
                  port='5000',
                  reader=None,
                  parser=None):
+        """
+        Server Class
+        Sends the data of the sample file to the server
+
+        :param host: defaults to '127.0.0.1'
+        :param port: defaults to '5000'
+        :param reader: read the data from sample file
+        :param parser: parse the snapshot and leave only the relevant fields
+        """
         self.reader = reader
         self.server_add = f'http://{host}:{port}'
         self.server_config = None
         self.update_config()
 
     def update_config(self):
+        """[summary]
+        Updates the config of the server
+        """
         result = requests.get(f'{self.server_add}/fields')
         if result.status_code != 200:
             return 1
@@ -20,6 +32,9 @@ class Client:
         return 0
 
     def post_snapshot(self, snapshot, user_id):
+        """
+        Send snapshot data
+        """
         ep = f'{self.server_add}/{user_id}/snapshot'
         if self.server_config and self.parser:
             snapshot = self.parser.parse_snapshot(snapshot, self.server_config)
@@ -29,6 +44,9 @@ class Client:
         return 0
 
     def post_user(self, user):
+        """
+        Send user data
+        """
         ep = f'{self.server_add}/users'
         result = requests.post(ep, user.SerializeToString())
         if result.status_code != 201:
@@ -36,6 +54,9 @@ class Client:
         return 0
 
     def upload_sample(self):
+        """
+        Uploads the sample file
+        """
         i = 0
         if not self.reader:
             return i

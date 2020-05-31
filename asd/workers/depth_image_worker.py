@@ -12,6 +12,11 @@ class DepthImgWorker:
 
     @staticmethod
     def run(mq_url):
+        """
+        Start consuming and handles the data from the mq
+
+        :param mq_url:
+        """
         worker = Worker(DepthImgWorker.payload_handler,
                         DBPublisher(mq_url), 'depth_image', mq_url)
         worker.start_consuming()

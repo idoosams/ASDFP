@@ -8,6 +8,10 @@ config = ['pose', 'color_image', 'feelings', 'depth_image']
 
 
 class WorkersFactory:
+    """
+    WorkersFactory Class
+    Creates instanse of a worker by name.
+    """
     @staticmethod
     def create_worker(name, data_path):
         if name == 'pose':
