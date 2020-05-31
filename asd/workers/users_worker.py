@@ -5,6 +5,11 @@ from .worker_base import Worker
 class UserWorker:
     @staticmethod
     def run(mq_url):
+        """
+        Start consuming and handles the user data from the mq
+
+        :param mq_url:
+        """
         worker = Worker(UserWorker.payload_handler,
                         DBPublisher(mq_url), 'users', mq_url)
         worker.start_consuming()

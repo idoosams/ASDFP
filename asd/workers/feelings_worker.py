@@ -6,6 +6,11 @@ from .utills import parse_payload
 class FeelingsWorker:
     @staticmethod
     def run(mq_url):
+        """
+        Start consuming and handles the data from the mq
+
+        :param mq_url:
+        """
         worker = Worker(FeelingsWorker.payload_handler,
                         DBPublisher(mq_url), 'feelings', mq_url)
         worker.start_consuming()

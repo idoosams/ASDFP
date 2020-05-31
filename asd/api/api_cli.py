@@ -14,6 +14,14 @@ def cli_client():
 @click.option('--db_url', 'db_url', default="mongodb://127.0.0.1:27017")
 @click.option('--config_path', 'config_path')
 def run(host, port, db_url, config_path):
+    """
+    Starts the api
+
+    :param host: host addresss
+    :param port: port number
+    :param db_url: db url
+    :param config_path: path to a config file
+    """
     if config_path:
         config = configparser.ConfigParser()
         config.read(config_path)

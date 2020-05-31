@@ -4,7 +4,21 @@ import json
 
 
 class Server():
+    """
+    Server Class
+    Handels the connection with POST and GET endpoints
+
+    avaliable EPs:
+        - /fields/
+        - /users/
+        - /<user_id>/snapshot/
+    """
     def __init__(self, host="127.0.0.1", port="5000"):
+        """[summary]
+
+        :param host: defaults to "127.0.0.1"
+        :param port: defaults to "5000"
+        """
         self.app = None
         self.api = None
         self.host = host
@@ -27,8 +41,7 @@ class Server():
                 snapshot_dict = snapshot_formater.format_snapshot(
                     request.data, user_id, data_path)
                 with snanpshot_publisher as publisher:
-                    publisher.publish_snapshot(snapshot_dict, user_id,
-                                               snapshot_dict["datetime"])
+                    publisher.publish_snapshot(snapshot_dict, user_id)
 
         self.app = Flask(__name__)
         self.api = Api(self.app)
@@ -36,15 +49,3 @@ class Server():
         self.api.add_resource(users_callback, '/users/')
         self.api.add_resource(snapshot_callback, '/<user_id>/snapshot')
         self.app.run(host=self.host, port=self.port)
-
-
-# if __name__ == "__main__":
-#     from .snanpshot_publisher import SnanpshotPublisher
-#     from .snapshot_formater import SnapshotFormater
-#     # datetime in mandatory in every snapshot!
-#     config = ['datetime', 'pose', 'color_image', 'feelings', 'depth_image']
-#     server = Server()
-#     datapath = "/home/idos/Desktop/Advenced-System-Design/ASDFP/asd/data"
-#     server.run_server(config, SnapshotFormater(),
-#                       SnanpshotPublisher(), datapath)
-#     app = server.app sdasad

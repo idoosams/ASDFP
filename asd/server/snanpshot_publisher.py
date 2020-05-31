@@ -6,7 +6,16 @@ from furl import furl
 
 
 class SnanpshotPublisher():
+    """
+    SnanpshotPublisher Class
+    publish the server data to the message queue
+    """
+
     def __init__(self, queues, url='rabbitmq://127.0.0.1:5672'):
+        """
+        :param queues: queues for the message queue
+        :param url: defaults to 'rabbitmq://127.0.0.1:5672'
+        """
         self.url = furl(url)
         self.queues = queues[:]
         self.queues.remove('datetime')  # passed in every queue
@@ -27,6 +36,8 @@ class SnanpshotPublisher():
                 time.sleep(10)
 
     def publish_user(self, user):
+        """Publish user info
+        """
         self.channel.basic_publish(
             exchange='',
             routing_key="users",
@@ -37,7 +48,9 @@ class SnanpshotPublisher():
             ))
         print("User Sent")
 
-    def publish_snapshot(self, snapshot, user_id, datetime):
+    def publish_snapshot(self, snapshot, user_id):
+        """Publish snapshot info
+        """
         for field in self.queues:
             attr = snapshot.get(field)
             if attr:
@@ -47,7 +60,7 @@ class SnanpshotPublisher():
                     body=pickle.dumps(
                         dict(data=attr,
                              user_id=user_id,
-                             datetime=datetime)),
+                             datetime=snapshot.get('datetime'))),
                     properties=pika.BasicProperties(
                         delivery_mode=2,  # make message persistent
                     ))

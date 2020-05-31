@@ -8,11 +8,17 @@ import configparser
 def cli_client():
     pass
 
+
 @click.option('--mq_url', 'mq_url', default="rabbitmq://127.0.0.1:5672")
 @click.option('--db_url', 'db_url', default="mongodb://127.0.0.1:27017")
 @click.option('--config_path', 'config_path')
 @cli_client.command('run')
 def run(mq_url, db_url, config_path):
+    """Runs the dbclient
+    :param mq_url:
+    :param db_url: 
+    :param config_path:
+    """
     if config_path:
         config = configparser.ConfigParser()
         config.read(config_path)

@@ -5,7 +5,18 @@ from datetime import datetime as dt
 
 
 class SnapshotFormater:
+    """
+    SnapshotFormater Class
+    Format the snapshots and user info into a dict
+    """
     def format_snapshot(self, snapshot, user_id, data_path):
+        """
+        Format a snapshot into a dict
+        :param snapshot:
+        :param user_id:
+        :param data_path: destof the server data
+        :return: dict snapshot
+        """
         snapshot_obj = Snapshot.FromString(snapshot)
         json_snapshot = {
             "datetime": self._format_datetime(snapshot_obj.datetime),
@@ -19,6 +30,11 @@ class SnapshotFormater:
         return json_snapshot
 
     def format_user(self, user):
+        """
+        Format a user into a dict
+        :param user:
+        :return: dict user
+        """
         user_obj = User.FromString(user)
         return {
             "username": user_obj.username,

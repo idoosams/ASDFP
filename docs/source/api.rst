@@ -1,42 +1,54 @@
-Foobar API Reference
-====================
+api package
+===========
 
-This is Foobar's API reference.
+Submodules
+----------
 
-Foo
----
+api.api module
+--------------
 
-.. class:: foobar.Foo
+.. automodule:: api.api
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-    Encapsulates ``Foo`` objects.
+api.api\_cli module
+-------------------
 
-    .. method:: run()
+.. automodule:: api.api_cli
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-        Returns ``'foo'``.
+api.mongo\_client module
+------------------------
 
-    .. method:: inc(x)
+.. automodule:: api.mongo_client
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-        Returns ``x`` incremented by one.
+api.templates module
+--------------------
 
-    .. method:: add(x, y)
+.. automodule:: api.templates
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-        Returns the sum of ``x`` and ``y``.
 
-Bar
----
+Module contents
+---------------
 
-.. class:: foobar.Bar
+.. automodule:: api
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-    Encapsulates ``Bar`` objects.
 
-    .. method:: run()
+Command Line
+----------------
 
-        Returns ``'bar'``.
-
-    .. method:: inc(x)
-
-        Returns ``x`` incremented by one.
-
-    .. method:: add(x, y)
-
-        Returns the sum of ``x`` and ``y``.
+.. click:: api.api_cli:run
+   :prog: python -m asd.api run 
+   :show-nested:

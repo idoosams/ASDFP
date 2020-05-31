@@ -9,6 +9,10 @@ from .proto_parser import Parser
 @click.option('-h', 'host', default='127.0.0.1')
 @click.option('-p', 'port', default='5000')
 def cli_client(obj, host, port):
+    """Start the client upload.
+    :param host: host addresss
+    :param port: port number
+    """
     obj['Client'] = Client(host, port)
 
 

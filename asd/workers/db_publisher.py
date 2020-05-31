@@ -5,6 +5,10 @@ from furl import furl
 
 
 class DBPublisher():
+    """
+    DBPublisher class
+    Publish the results of the workers to the DB queue
+    """
     def __init__(self,  url='rabbitmq://127.0.0.1:5672'):
         self.url = furl(url)
 
@@ -16,6 +20,12 @@ class DBPublisher():
         return self
 
     def publish(self, data, table_name):
+        """
+        Publish the data to the table
+
+        :param data:
+        :param table_name:
+        """
         self.channel.basic_publish(
             exchange='',
             routing_key="db_feed",
