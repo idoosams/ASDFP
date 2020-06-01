@@ -35,7 +35,6 @@ class Client:
         """
         Send snapshot data
         """
-        snapshot.pose.rotation.x = 123
         ep = f'{self.server_add}/{user_id}/snapshot'
         if self.server_config and self.parser:
             snapshot = self.parser.parse_snapshot(snapshot, self.server_config)
@@ -49,7 +48,6 @@ class Client:
         Send user data
         """
         ep = f'{self.server_add}/users'
-        user.username = "asdasda"
         result = requests.post(ep, user.SerializeToString())
         if result.status_code != 201:
             return 1
