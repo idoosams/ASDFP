@@ -52,3 +52,7 @@ Command Line
 .. click:: api.api_cli:run
    :prog: python -m asd.api run 
    :show-nested:
+
+.. click:: api.api_cli:get_data
+   :prog: python -m asd.api get_data 
+   :show-nested:

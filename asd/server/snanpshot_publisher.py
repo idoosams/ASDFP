@@ -18,7 +18,6 @@ class SnanpshotPublisher():
         """
         self.url = furl(url)
         self.queues = queues[:]
-        self.queues.remove('datetime')  # passed in every queue
 
     def __enter__(self):
         # on docker usually fails on the first time since mq didn't start
@@ -52,18 +51,19 @@ class SnanpshotPublisher():
         """Publish snapshot info
         """
         for field in self.queues:
-            attr = snapshot.get(field)
-            if attr:
-                self.channel.basic_publish(
-                    exchange='',
-                    routing_key=field,
-                    body=pickle.dumps(
-                        dict(data=attr,
-                             user_id=user_id,
-                             datetime=snapshot.get('datetime'))),
-                    properties=pika.BasicProperties(
-                        delivery_mode=2,  # make message persistent
-                    ))
+            if field != "datetime":
+                attr = snapshot.get(field)
+                if attr:
+                    self.channel.basic_publish(
+                        exchange='',
+                        routing_key=field,
+                        body=pickle.dumps(
+                            dict(data=attr,
+                                 user_id=user_id,
+                                 datetime=snapshot.get('datetime'))),
+                        properties=pika.BasicProperties(
+                            delivery_mode=2,  # make message persistent
+                        ))
             print(" [x] Sent")
 
     def __exit__(self, exc_type, exc_value, exc_traceback):

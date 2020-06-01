@@ -1,8 +1,5 @@
-FROM python:3
+FROM asd-base:latest
 
 COPY workers /workers
-COPY requirements.txt requirements.txt
-COPY config.ini config.ini
-RUN pip install -r requirements.txt
 
 ENTRYPOINT ["python", "-m", "workers"]
